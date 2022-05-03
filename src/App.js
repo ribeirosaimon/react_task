@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 
 function App() {
@@ -7,6 +7,10 @@ function App() {
   const [newDescription, setNewDescription] = useState("");
   const [newName, setNewName] = useState("");
   const [taskList, setTaskList] = useState([]);
+
+  useEffect( () => {
+    getTasks();
+  }, [])
 
   const addTask = () => {
     Axios.post("http://localhost:8080/api/task/", {
@@ -21,8 +25,7 @@ function App() {
           description: description
         },
       ]);
-    });
-    this.getTasks();
+    }).finally(getTasks);
   };
 
   const getTasks = () => {
@@ -44,9 +47,9 @@ function App() {
                 }
               : val;
           })
-        );
+        )
       }
-    );
+    ).finally(getTasks);
   };
 
   const deleteEmployee = (id) => {
@@ -56,12 +59,20 @@ function App() {
           return val.id != id;
         })
       );
-    });
+    }).finally(getTasks);
   };
 
   return (
     <div className="App">
-      <div className="information">
+      <div>
+        <h1>
+          App Task
+        </h1>
+      </div>
+      <div>
+        <h2>
+          Create Task
+        </h2>
         <label>Name:</label>
         <input
           type="text"
@@ -78,33 +89,44 @@ function App() {
         />
         <button onClick={addTask}>Add Task</button>
       </div>
-      <div className="tasks">
-        <button onClick={getTasks}>Show Tasks</button>
 
-        {taskList.map((val, key) => {
+      <div>
+       <table className="table table-striped">
+          <thead>
+              <tr>
+                  <td>Id</td>
+                  <td>Name</td>
+                  <td>Description</td>
+              </tr>
+          </thead>
+          <tbody>
+          {taskList.map((val, key) => {
           return (
-            <div className="task">
-              <div>
-                <h3>Id: {val.id}</h3>
-                <h3>Name: {val.name}</h3>
-                <h3>Description: {val.description}</h3>
-              </div>
-              <div>
-                <input
+
+          <tr>
+            <td>{val.id}</td>
+            <td>{val.name}</td>
+            <td>{val.description}</td>
+            <td>
+            <input
                   type="text"
                   placeholder="Name..."
                   onChange={(event) => {
                     setNewName(event.target.value);
                   }}
                 />
-                <input
+            </td>
+            <td>
+            <input
                   type="text"
                   placeholder="Description..."
                   onChange={(event) => {
                     setNewDescription(event.target.value);
                   }}
                 />
-                <button
+            </td>
+            <td>
+            <button
                   onClick={() => {
                     updateTask(val.id);
                   }}
@@ -112,18 +134,21 @@ function App() {
                   {" "}
                   Update
                 </button>
-
-                <button
+            </td>
+            <td>
+            <button
                   onClick={() => {
                     deleteEmployee(val.id);
                   }}
                 >
                   Delete
                 </button>
-              </div>
-            </div>
-          );
+            </td>
+          </tr>
+                    );
         })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
