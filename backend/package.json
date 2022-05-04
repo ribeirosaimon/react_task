@@ -1,0 +1,23 @@
+{
+  "name": "react_task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --watch db.json 8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ribeirosaimon/react_task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ribeirosaimon/react_task/issues"
+  },
+  "homepage": "https://github.com/ribeirosaimon/react_task#readme",
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}
