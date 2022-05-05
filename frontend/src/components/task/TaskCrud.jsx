@@ -36,7 +36,7 @@ export default class TaskCrud extends Component {
 
     remove(task){
         axios.delete(`${baseUrl}/${task.id}`).then(resp =>{
-            const list = this.getUpdatedList(null)
+            const list = this.getUpdatedList(task, false)
             this.setState({list})
         })
     }
@@ -94,9 +94,9 @@ export default class TaskCrud extends Component {
             })
     }
 
-    getUpdatedList(task){
-        const list = this.state.list.filter(t => t.id !== task)
-        if(task) list.unshift(task)
+    getUpdatedList(task, add=true){
+        const list = this.state.list.filter(t => t.id !== task.id)
+        if(add) list.unshift(task)
         return list
     }
 
