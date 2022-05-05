@@ -35,6 +35,7 @@ export default class TaskCrud extends Component {
     }
 
     remove(task){
+        console.log(task.id)
         axios.delete(`${baseUrl}/${task.id}`).then(resp =>{
             const list = this.getUpdatedList(null)
             this.setState({list})
@@ -72,7 +73,7 @@ export default class TaskCrud extends Component {
                             <i className="fa fa-pencil"></i>
                         </button>
                         <button className="btn btn-danger ml-2"
-                        onClick={() => this.delete(task)}>
+                        onClick={() => this.remove(task)}>
                             <i className="fa fa-trash"></i>
                         </button>
                     </td>
@@ -90,10 +91,8 @@ export default class TaskCrud extends Component {
         axios[method](url, task)
             .then(resp => {
                 const list = this.getUpdatedList(resp.data)
-                this.setState({task:initialState.task})
+                this.setState({task:initialState.task, list})
             })
-        this.getUpdatedList(task)
-
     }
 
     getUpdatedList(task){
