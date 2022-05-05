@@ -10,7 +10,7 @@ const headerProps = {
 
 }
 
-const baseUrl = "http://localhost:8080/tasks"
+const baseUrl = "http://localhost:8080/api/task"
 
 const initialState = {
     task: {name: "", description:""},
@@ -35,7 +35,6 @@ export default class TaskCrud extends Component {
     }
 
     remove(task){
-        console.log(task.id)
         axios.delete(`${baseUrl}/${task.id}`).then(resp =>{
             const list = this.getUpdatedList(null)
             this.setState({list})
@@ -96,7 +95,7 @@ export default class TaskCrud extends Component {
     }
 
     getUpdatedList(task){
-        const list = this.state.list.filter(t => t.id !== task.id)
+        const list = this.state.list.filter(t => t.id !== task)
         if(task) list.unshift(task)
         return list
     }
