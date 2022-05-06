@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios"
 import Main from "../template/Main";
-
+import { Link } from "react-router-dom"
 
 const headerProps = {
     icon:"users",
@@ -10,24 +10,25 @@ const headerProps = {
 
 }
 
-const baseUrl = "http://localhost:8080/api/task"
+const baseUrl = "http://localhost:8080/task"
 
-const initialState = {
+const taskState = {
     task: {name: "", description:""},
     list: []
 }
 
-export default class TaskCrud extends Component {
+class SaveTask extends Component {
 
-    state = {... initialState}
+    state = {... taskState}
 
     clear() {
-        this.setState({task: initialState.task})
+        this.setState({task: taskState.task})
     }
 
     componentDidMount(){
-        axios(baseUrl).then(resp => 
-            this.setState({list:resp.data}))
+        axios(baseUrl).then(resp => {
+            this.setState({list:resp.data})
+        })
     }
 
     load(task){
@@ -41,47 +42,6 @@ export default class TaskCrud extends Component {
         })
     }
 
-    renderTable(){
-        return (
-            <table className="table mt-4">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.renderRows()}
-                </tbody>
-            </table>
-        )
-    }
-
-    renderRows() {
-        return this.state.list.map(task => {
-            return (
-                <tr key={task.id}>
-                    <td>{task.id}</td>
-                    <td>{task.name}</td>
-                    <td>{task.description}</td>
-                    <td>
-                        <button className="btn btn-warning"
-                        onClick={() => this.load(task)}>
-                            <i className="fa fa-pencil"></i>
-                        </button>
-                        <button className="btn btn-danger ml-2"
-                        onClick={() => this.remove(task)}>
-                            <i className="fa fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-
-            )
-        } )
-    }
-
     save(){
         const task = this.state.task
         const method = task.id ? "put" : "post"
@@ -90,7 +50,7 @@ export default class TaskCrud extends Component {
         axios[method](url, task)
             .then(resp => {
                 const list = this.getUpdatedList(resp.data)
-                this.setState({task:initialState.task, list})
+                this.setState({task:taskState.task, list})
             })
     }
 
@@ -140,9 +100,12 @@ export default class TaskCrud extends Component {
                 </div>
             </div>
             <div className="row">
-                <div className="col-12 d-flex justify-content-end"></div>
-                <button className="btn btn-primary" onClick={e => this.save(e)}>Salvar</button>
+                <div className="col-12 d-flex justify-content-center mt-2">
+                <Link to="/listtask" >
+                    <button className="btn btn-primary" onClick={e => this.save(e)}>Salvar</button>
+                </Link>
                 <button className="btn btn-secundary ml-2" onClick={e => this.clear(e)}>Cancelar</button>
+                </div>
             </div>
         </div>
     }
@@ -151,8 +114,9 @@ export default class TaskCrud extends Component {
         return (
             <Main {... headerProps}>
                 {this.renderForm()}
-                {this.renderTable()}
             </Main>
         )
     }
 }
+
+export default SaveTask

@@ -7,10 +7,10 @@ export default props =>
 
     <nav className="menu">
         <Link to="/">
-            <i className="fa fa-home"></i> Lista Tasks
+            <i className="fa fa-home"></i> Home
         </Link>
-        <Link to="/createtask">
-            <i className="fa fa-users"></i> Adicionar Task
+        <Link to="/listtask">
+            <i className="fa fa-users"></i> Lista Task
         </Link>
     </nav>
 </aside>
