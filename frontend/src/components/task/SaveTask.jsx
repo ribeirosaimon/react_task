@@ -9,7 +9,7 @@ const headerProps = {
     subtitles: "Cadastro de Task: CRUD"
 }
 
-const baseUrl = "http://localhost:8080/task"
+const baseUrl = "http://localhost:8080/api/task"
 const taskState = {
     task: {name: "", description:""},
     list: []

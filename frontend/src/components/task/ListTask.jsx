@@ -10,7 +10,7 @@ const headerProps = {
 
 }
 
-const baseUrl = "http://localhost:8080/task"
+const baseUrl = "http://localhost:8080/api/task"
 
 const initialState = {
     task: {name: "", description:""},
