@@ -25,9 +25,18 @@ export default class ListTask extends Component {
         this.setState({task: initialState.task})
     }
 
+
+    getInformations(){
+        axios(baseUrl).then(resp => {
+            this.setState({list:resp.data})
+        })
+    }
+    componentWillUnmount(){
+        this.getInformations()
+    }
+
     componentDidMount(){
-        axios(baseUrl).then(resp => 
-            this.setState({list:resp.data}))
+        this.getInformations()
     }
 
     load(task){

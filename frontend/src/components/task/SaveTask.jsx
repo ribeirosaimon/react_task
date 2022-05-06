@@ -21,15 +21,15 @@ function SaveTask() {
 
     const [task, setTask] = useState(taskState.task);
     const [list, setList] = useState(taskState.list);
+
     function clear() {
         setTask(taskState.task);
         setList(taskState.list);
     }
+
     useEffect(() => {
         
         if(id) {
-            console.log(id)
-            console.log("ok")
             axios(`${baseUrl}/${id}`).then( resp => {
                 const _task = { ...task }
                 _task.id = id
@@ -50,7 +50,6 @@ function SaveTask() {
 
         const method = task.id ? "put" : "post"
         const url = id ? `${baseUrl}/${id}` : baseUrl
-        console.log(url)
         axios[method](url, task)
             .then(resp => {
                 const list = getUpdatedList(resp.data)
