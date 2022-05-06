@@ -116,7 +116,7 @@ export default class ListTask extends Component {
     render() {
         return (
             <Main {... headerProps}>
-                <Link to="/savetask" >
+                <Link to="/savetask/" >
                     <button>
                         <i className="fa fa-users"></i> Adicionar Task
                     </button>

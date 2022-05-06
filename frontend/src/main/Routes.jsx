@@ -8,6 +8,7 @@ import ListTask from "../components/task/ListTask";
 export default props =>  (
     <Routes>
         <Route exact path="/" element={<Home/>}/>
+        <Route path="/savetask" element={<SaveTask/>}/>
         <Route path="/savetask/:id" element={<SaveTask/>}/>
         <Route path="/listtask" element={<ListTask/>}/>
     </Routes>
